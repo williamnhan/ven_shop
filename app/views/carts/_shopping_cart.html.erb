@@ -7,7 +7,7 @@
     </ul>
   </div>
 <% end %>
-<% if @order_items.zero? %>
+<% if @order_items.size.zero? %>
   <p class="text-center">
     There are no items in your shopping cart.  Please <%= link_to "go back", root_path %> and add some items to your cart.
   </p>
