@@ -5,9 +5,9 @@ namespace :amazon do
     requestd = Vacuum.new
 
     requestd.configure(
-    aws_access_key_id: 'AKIAIAJR65JO6EIPQWTA',
-    aws_secret_access_key: '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',
-    associate_tag: 'microv'
+    aws_access_key_id: Rails.application.secrets.aws_access_key_id,
+    aws_secret_access_key: Rails.application.secrets.aws_secret_access_key,
+    associate_tag: Rails.application.secrets.associate_tag
     )
 
     # Root node from amazon
@@ -19,11 +19,12 @@ namespace :amazon do
       }
     )
     hashed_categories = response.to_h
-
+    # print hashed_categories
+    # Process.exit!(true)
     hashed_categories['BrowseNodeLookupResponse']['BrowseNodes']['BrowseNode']['Children']['BrowseNode'].each do |item|
       # update category if it's already exist.
-      if Category.exists?(browse_node_id: item['BrowseNodeId'])
-        category = Category.find_by_browse_node_id( item['BrowseNodeId'] )
+      category = Category.find_by( browse_node_id: item['BrowseNodeId'] )
+      if category        
         category.update!(name: item['Name'])
       else 
         Category.create!( name: item['Name'], 
@@ -60,19 +61,14 @@ namespace :amazon do
         # Check price exist.
 
         if defined? item['OfferSummary']['LowestNewPrice']['FormattedPrice']
-          begin
           price = item['OfferSummary']['LowestNewPrice']['Amount'].to_i / 100.0
-        rescue StandardError
-          byebug
-        end
         else
-          byebug
           price = 0
         end
 
         # update product if it's already exist.
         if Product.exists?(asin: item['ASIN'])
-          product = Product.find_by_asin( item['ASIN'] )
+          product = Product.find_by( asin: item['ASIN'] )
           product.update!(  
                             name: item['ItemAttributes']['Title'],
                             price: price,
