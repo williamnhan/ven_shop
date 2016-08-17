@@ -59,39 +59,24 @@ namespace :amazon do
       hashed_products = response.to_h
       hashed_products['ItemSearchResponse']['Items']['Item'].each do |item|
         # Check price exist.
-
-        if defined? item['OfferSummary']['LowestNewPrice']['FormattedPrice']
+        if item.dig( "OfferSummary", 'LowestNewPrice', 'Amount' )
           price = item['OfferSummary']['LowestNewPrice']['Amount'].to_i / 100.0
         else
           price = 0
         end
 
         # update product if it's already exist.
-        if Product.exists?(asin: item['ASIN'])
-          product = Product.find_by( asin: item['ASIN'] )
-          product.update!(  
-                            name: item['ItemAttributes']['Title'],
-                            price: price,
-                            url: item['DetailPageURL'],
-                            feature: item['ItemAttributes']['Feature'],
-                            image_url: item['LargeImage']['URL'],
-                            link: item['ItemLinks']['ItemLink'][5]['URL'],
-                            category_id: category.id
-                            # asin: item['ASIN']
-                          )
-        else
-          Product.create!(  
-                            name: item['ItemAttributes']['Title'],
-                            price: price,
-                            url: item['DetailPageURL'],
-                            feature: item['ItemAttributes']['Feature'],
-                            image_url: item['LargeImage']['URL'],
-                            link: item['ItemLinks']['ItemLink'][5]['URL'],
-                            asin: item['ASIN'],
-                            category_id: category.id,
-                            active: true
-                          )
-        end
+        product = Product.find_or_initialize_by(asin: item["ASIN"])
+        product.update!(  
+          name: item['ItemAttributes']['Title'],
+          price: price,
+          url: item['DetailPageURL'],
+          feature: item['ItemAttributes']['Feature'],
+          image_url: (item['LargeImage'] ? item['LargeImage']['URL'] : ''),
+          link: item['ItemLinks']['ItemLink'][5]['URL'],
+          category_id: category.id
+          # asin: item['ASIN']
+        )
       end
 
     end
