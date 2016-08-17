@@ -58,14 +58,8 @@ namespace :amazon do
       )
       hashed_products = response.to_h
       hashed_products['ItemSearchResponse']['Items']['Item'].each do |item|
-        # Check price exist.
-        if item.dig( "OfferSummary", 'LowestNewPrice', 'Amount' )
-          price = item['OfferSummary']['LowestNewPrice']['Amount'].to_i / 100.0
-        else
-          price = 0
-        end
+        price = item.dig( "OfferSummary", 'LowestNewPrice', 'Amount' ).to_i / 100.0
 
-        # update product if it's already exist.
         product = Product.find_or_initialize_by(asin: item["ASIN"])
         product.update!(  
           name: item['ItemAttributes']['Title'],
