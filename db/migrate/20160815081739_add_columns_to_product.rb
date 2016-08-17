@@ -6,5 +6,8 @@ class AddColumnsToProduct < ActiveRecord::Migration[5.0]
     add_column :products, :link, :string
     add_column :products, :asin, :string
     add_column :products, :category_id, :string
+
+    add_index :products, :category_id
+
   end
 end
