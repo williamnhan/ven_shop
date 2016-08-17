@@ -23,6 +23,7 @@
         <% else %>
           <li><%= link_to "Log in", login_path %></li>
         <% end %>
+          <li class="cart-text"><%= link_to "#{current_order.order_items.size} Items in Cart ( #{number_to_currency current_order.subtotal} )", cart_path, class: "dropdown-toggle" %></li>
 
       </ul>
     </nav>

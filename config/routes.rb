@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
-  get 'sessions/new'
-
-  root 	 'static_page#home'
+  #root 	 'static_page#home'
+  root   'products#index'
   get  	 '/help', 	 to: 'static_page#help'
   #get   '/about',   to: 'static_page#about'
   #get   '/contact', to: 'static_page#contact'
@@ -12,4 +11,7 @@ Rails.application.routes.draw do
 
   resources :users
 
+  resources :products, only: [:index]
+  resource  :cart, only: [:show]
+  resources :order_items, only: [:create, :update, :destroy]
 end
