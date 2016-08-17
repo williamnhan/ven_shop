@@ -40,9 +40,9 @@ namespace :amazon do
     requestd = Vacuum.new
 
     requestd.configure(
-    aws_access_key_id: 'AKIAIAJR65JO6EIPQWTA',
-    aws_secret_access_key: '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',
-    associate_tag: 'microv'
+    aws_access_key_id: Rails.application.secrets.aws_access_key_id,
+    aws_secret_access_key: Rails.application.secrets.aws_secret_access_key,
+    associate_tag: Rails.application.secrets.associate_tag
     )
 
     categories = Category.all
