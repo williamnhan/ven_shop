@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema name="sunspot" version="1.0">
+  <types>
+    <fieldType name="string" class="solr.StrField" omitNorms="true"/>
+    <fieldType name="tdouble" class="solr.TrieDoubleField" omitNorms="true"/>
+    <fieldType name="rand" class="solr.RandomSortField" omitNorms="true"/>
+    <fieldType name="text" class="solr.TextField" omitNorms="false">
+      <analyzer>
+        <tokenizer class="solr.StandardTokenizerFactory"/>
+        <filter class="solr.StandardFilterFactory"/>
+        <filter class="solr.LowerCaseFilterFactory"/>
+        <filter class="solr.PorterStemFilterFactory"/>
+      </analyzer>
+    </fieldType>
+    <fieldType name="boolean" class="solr.BoolField" omitNorms="true"/>
+    <fieldType name="tint" class="solr.TrieIntField" omitNorms="true"/>
+    <fieldType name="tlong" class="solr.TrieLongField" omitNorms="true"/>
+    <fieldType name="tfloat" class="solr.TrieFloatField" omitNorms="true"/>
+    <fieldType name="tdate" class="solr.TrieDateField"   omitNorms="true"/>
+    <fieldType name="daterange" class="solr.DateRangeField" omitNorms="true" />
+
+    <!-- A specialized field for geospatial search. If indexed, this fieldType must not be multivalued. -->
+    <fieldType name="location" class="solr.LatLonType" subFieldSuffix="_coordinate"/>
+  </types>
+  <fields>
+    <field name="id"        type="string"   indexed="true" stored="true" multiValued="false" />
+    <field name="name"      type="text"     indexed="true" stored="true" multiValued="false" />
+    <field name="price"     type="string"   indexed="true" stored="true" multiValued="false" />
+    <field name="active"    type="string"   indexed="true" stored="true" multiValued="false" />
+    <field name="created_at" type="tdate"    indexed="true" stored="true" multiValued="false" />
+    <field name="updated_at" type="tdate"    indexed="true" stored="false" multiValued="false" />
+    <field name="feature"   type="text"   indexed="true" stored="true" multiValued="false" />
+    <field name="category_id" type="tint"   indexed="true" stored="true" multiValued="false" />
+
+    <!--
+    <field name="text"      type="string"   indexed="true" stored="true"/>
+    <field name="token_text" type="text"    indexed="true" stored="false" multiValued="true"/>
+    -->
+    
+    <!-- required by Solr 5 -->
+    <field name="_version_" type="tlong" indexed="true" stored="true" multiValued="false" />
+  </fields>
+  
+  <uniqueKey>id</uniqueKey>
+  <defaultSearchField>name</defaultSearchField>
+  <solrQueryParser defaultOperator="AND"/>
+</schema>
