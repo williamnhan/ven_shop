@@ -9,7 +9,6 @@
         <tokenizer class="solr.StandardTokenizerFactory"/>
         <filter class="solr.StandardFilterFactory"/>
         <filter class="solr.LowerCaseFilterFactory"/>
-        <filter class="solr.PorterStemFilterFactory"/>
       </analyzer>
     </fieldType>
     <fieldType name="boolean" class="solr.BoolField" omitNorms="true"/>
@@ -24,13 +23,13 @@
   </types>
   <fields>
     <field name="id"        type="string"   indexed="true" stored="true" multiValued="false" />
-    <field name="name"      type="text"     indexed="true" stored="true" multiValued="false" />
-    <field name="price"     type="string"   indexed="true" stored="true" multiValued="false" />
-    <field name="active"    type="string"   indexed="true" stored="true" multiValued="false" />
-    <field name="created_at" type="tdate"    indexed="true" stored="true" multiValued="false" />
+    <field name="name"      type="text"     indexed="true" stored="false" multiValued="false" />
+    <field name="price"     type="string"   indexed="true" stored="false" multiValued="false" />
+    <field name="active"    type="string"   indexed="true" stored="false" multiValued="false" />
+    <field name="created_at" type="tdate"    indexed="true" stored="false" multiValued="false" />
     <field name="updated_at" type="tdate"    indexed="true" stored="false" multiValued="false" />
-    <field name="feature"   type="text"   indexed="true" stored="true" multiValued="false" />
-    <field name="category_id" type="tint"   indexed="true" stored="true" multiValued="false" />
+    <field name="feature"   type="text"   indexed="true" stored="false" multiValued="false" />
+    <field name="category_id" type="tint"   indexed="true" stored="false" multiValued="false" />
 
     <!--
     <field name="text"      type="string"   indexed="true" stored="true"/>
