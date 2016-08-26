@@ -3,9 +3,9 @@
   <%= render "left_menu" %>
 
   <div class="col-md-9 border_left">
-    <h3 class="text-left"><%= pluralize(@response['response']['numFound'], "product") %> found</h3>
-    <% @response['response']['docs'].each do |product| %>
-      <%= render "product_search", product: product.to_h, order_item: @order_item %>
+    <h3 class="text-left"><%= pluralize(@numFound, "product") %> found</h3>
+    <% @products.each do |product| %>
+      <%= render "product_row", product: product, order_item: @order_item %>
     <% end %>
   </div>
 </div>
