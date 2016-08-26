@@ -4,9 +4,7 @@
   <div class="col-md-9 border_left">
   	<h3 class="text-left"><%= @category ? @category.name : 'News Items' %></h3>
   	<%= will_paginate %>
-    <% @products.each do |product| %>
-      <%= render "product_row", product: product, order_item: @order_item %>
-    <% end %>
+    <%=  render partial: "product_row", collection: @products, as: :product, locals: { order_item: @order_item } %>
     <%= will_paginate %>
   </div>
 </div>
