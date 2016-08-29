@@ -12,6 +12,7 @@ gem 'bootstrap-sass', '3.3.6'
 gem 'vacuum', '1.3.0'
 gem 'sunspot_rails'
 gem 'rsolr', '1.1.1'
+gem 'config', '1.2.1'
 #gem 'autoprefixer-rails'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
