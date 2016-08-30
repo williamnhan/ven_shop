@@ -1,0 +1,2 @@
+solr_config:
+  solr_url: 'http://localhost:8982/solr/development/'

@@ -1,0 +1,9 @@
+<% provide(:title, params[:search] ) %>
+<div class="row">
+  <%= render "left_menu" %>
+
+  <div class="col-md-9 border_left">
+    <h3 class="text-left"><%= pluralize(@numFound, "product") %> found</h3>
+    <%=  render partial: "product_row", collection: @products, as: :product, locals: { order_item: @order_item } %>
+  </div>
+</div>

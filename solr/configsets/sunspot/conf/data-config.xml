@@ -1,0 +1,38 @@
+<!--
+  Data Import Configuration
+  This will load all your existing ticket and wiki data into the solr index.
+  If you use a database other then sqlite you may need to change the queries
+  slightly. You will likely have to change the connection url as well.
+  To start this data import hit the following url (assumes solr is running
+  on the default port on localhost):
+  http://localhost:8983/solr/dataimport?command=full-import
+  For more details see:
+  http://wiki.apache.org/solr/DataImportHandler
+-->
+<dataConfig>
+
+  <dataSource
+    type="JdbcDataSource"
+    driver="org.sqlite.JDBC"
+    url="jdbc:sqlite:/home/nhannt/Ventura/projects/ven_shop/db/development.sqlite3"
+    batchSize="1000"
+  />
+
+  <document>
+    <entity
+      name="product"
+      query="select
+        id,
+        name,
+        price,
+        active,
+        replace(datetime(round(p.created_at/1000000), 'unixepoch'), ' ', 'T')||'Z' AS created_at,
+        replace(datetime(round(p.updated_at/1000000), 'unixepoch'), ' ', 'T')||'Z' AS updated_at,
+        feature,
+        category_id
+        from products as p
+        order by created_at asc">
+    </entity>
+  </document>
+
+</dataConfig>

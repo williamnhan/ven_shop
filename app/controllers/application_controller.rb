@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_order
 
   def current_order
-    Order.find_by(id: session[:order_id]) || Order.new
+    Order.find_by(id: session[:order_id]) || Order.new(order_status_id: 1)
   end
 
 end

@@ -8,10 +8,13 @@ Rails.application.routes.draw do
   get    '/login',   to: 'sessions#new'
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
+  # get    '/search',  to: 'products#search'
 
   resources :users
 
-  resources :products, only: [:index]
+  resources :products, only: [:index, :show] do 
+    get :search, on: :collection
+  end
   resource  :cart, only: [:show]
   resources :order_items, only: [:create, :update, :destroy]
 end
